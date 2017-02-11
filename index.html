@@ -1,0 +1,335 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Anton|Lobster" rel="stylesheet">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<script async src ="http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=368220abc0f75cdf7e40938689165a64">	</script>
+
+
+<title>Untitled Document</title>
+</head>
+
+<body>
+
+<style>
+	@font-face {
+	  font-family: 'DS-Digital';	
+	  src:url('font/DS-DIGI.TTF') format('truetype');
+	}
+	@font-face {
+	  font-family: 'DS-Digital-Bold';	
+	  src:url('font/DS-DIGIB.TTF') format('truetype');
+	  font-weight: bold;
+	}
+
+
+</style>
+	<div class="container-fluid">
+    	<div class="row">
+        	<div class ="center-block">
+                
+                <div id='clock' class ="text-center"></div>
+                	<div>
+                    	<div class="col-md-4"></div>
+                		<div id='day' class ="col-md-2"></div>
+                		<div id='date' class ="col-md-3"></div>
+                	</div>
+                
+                <div id='location_response' class ="text-center"></div>
+                
+                 <div id='weather_array' class ="text-center"></div>
+
+			</div>
+		</div>
+    </div>
+
+	<Script>
+		$(document).ready(function() {
+			function displayTime() {
+			var currentTime = new Date();
+			var hours = currentTime.getHours();
+			var minutes = currentTime.getMinutes();
+			var seconds = currentTime.getSeconds();
+		
+			
+			var month = currentTime.getMonth();
+			var monthString = "January";
+			var day = currentTime.getDay();
+			var numDay = currentTime.getUTCDate();
+			
+			
+			var dayString = "Monday";
+				switch(day) {
+				case 1:
+					dayString = "Saturday"
+					break;
+				case 2:
+					dayString = "Friday"
+					break;
+				case 3:
+					dayString = "Thursday"
+					break;
+				case 4:
+					dayString = "Wednesday"
+					break;
+				case 5:
+					dayString = "Friday"
+					break;
+				case 6:
+					dayString = "Monday"
+					break;
+				case 7:
+					dayString = "Sunday"
+					break;	
+					}
+					switch(month) {
+				case 0:
+					monthString = "Jan"
+					break;
+				case 1:
+					monthString = "Feb"
+					break;
+				case 2:
+					monthString = "March"
+					break;
+				case 3:
+					monthString = "April"
+					break;
+				case 4:
+					monthString = "May"
+					break;
+				case 5:
+					monthString = "June"
+					break;
+				case 6:
+					monthString = "July"
+					break;
+				case 7:
+					monthString = "August"
+					break;	
+				case 8:
+					monthString = "September"
+					break;	
+				case 9:
+					monthString = "October"
+					break;	
+				case 10:
+					monthString = "November"
+					break;	
+				case 11:
+					monthString = "December"
+					break;		
+					}
+			var year = currentTime.getFullYear();
+			var meridiem ="AM";
+				if (hours > 12) {
+					hours = hours - 12;
+					meridiem = "PM";	
+				}
+				if (hours === 0) {
+					hours = 12;	
+				}
+			var dayDiv = document.getElementById('day');
+			var dateDiv = document.getElementById('date');
+			var clockDiv = document.getElementById('clock');
+			
+			var season = "Winter";
+					switch(month) {
+				case 0:
+					season = "Winter"
+					break;
+				case 1:
+					season = "Winter"
+					break;
+				case 2:
+					if (numDay < 20) {season = "Winter"
+					}else {
+					season = "Spring"}
+					break;
+				case 3:
+					season = "Spring"
+					break;
+				case 4:
+					season = "Spring"
+					break;
+				case 5:
+					if (numDay < 20) {season = "Spring"
+					}else {
+					season = "Summer"}
+					break;
+				case 6:
+					season = "Summer"
+					break;
+				case 7:
+					season = "Summer"
+					break;	
+				case 8:
+					if (numDay < 22) {season = "Summer"
+					}else {
+					season = "Autumn"}
+					break;	
+				case 9:
+					season = "October"
+					break;	
+				case 10:
+					season = "November"
+					break;	
+				case 11:
+					if (numDay < 21) {season = "Autumn"
+					}else {
+					season = "Winter"}
+					break;		
+					}
+					
+			if (hours < 10) {
+				hours = "0" + hours;	
+				}
+			if (minutes < 10) {
+				minutes = "0" + minutes;	
+				}
+			if (seconds < 10) {
+				seconds = "0" + seconds;	
+				}						
+					
+			var colorWinter = ["#0A0D27","#191C3E","#636675","#ACADC2","#F3F5F1"];
+			var colorSpring = ["#F46161","#FB8289","#F89D5B","#FFCF62","#FDD5C0"];
+			var colorSummer = ["#17162F","#89346D","#C76058","#FFB248","#E8C475"];
+			var colorAutumn = ["#BA512E","#686B30","#D68F4F","#AB9A52","#E8BA67"];
+			
+			var firstColor = "";
+			var secondColor ="";
+			var thirdColor ="";
+			var fourthColor ="";
+			var fifthColor ="";
+			
+			switch(season) {
+				case "Winter":
+					firstColor = colorWinter.slice(1)[0];
+					secondColor = colorWinter.slice(2)[0];
+					thirdColor = colorWinter.slice(3)[0];
+					fourthColor = colorWinter.slice(4)[0];
+					fifthColor = colorWinter.slice(-1)[0];
+				break;
+				case "Spring":
+					firstColor = colorSpring.slice(1)[0];
+					secondColor = colorSpring.slice(2)[0];
+					thirdColor = colorSpring.slice(3)[0];
+					fourthColor = colorSpring.slice(4)[0];
+					fifthColor = colorSpring.slice(-1)[0];
+					
+				break;
+				case "Summer":
+					firstColor = colorSummer.slice(1)[0];
+					secondColor = colorSummer.slice(2)[0];
+					thirdColor = colorSummer.slice(3)[0];
+					fourthColor = colorSummer.slice(4)[0];
+					fifthColor = colorSummer.slice(-1)[0];
+				break;
+				case "Autumn":
+					firstColor = colorAutumn.slice(1)[0];
+					secondColor = colorAutumn.slice(2)[0];
+					thirdColor = colorAutumn.slice(3)[0];
+					fourthColor = colorAutumn.slice(4)[0];
+					fifthColor = colorAutumn.slice(-1)[0];
+				break;
+			
+			
+			};
+			
+			$("#day").css("color", '#e505e5');
+			$("#date").css("color", '#e505e5');
+			$("#clock").css("color", '#e505e5');
+			$("#day").css("text-shadow","0 0 23px #e505e5");
+			$("#date").css("text-shadow","0 0 23px #e505e5");		
+			$("#clock").css("text-shadow","0 0 23px #e505e5");
+			
+			<!--$("body").css("background-color","red");-->
+			$("#day").css("font-family","'DS-Digital', sans-serif");
+			$("#date").css("font-family","'DS-Digital', sans-serif");
+			$("#clock").css("font-family","'DS-Digital', sans-serif");
+			
+			$("#day").css("font-size","3em");
+			$("#date").css("font-size","3em");
+			$("#clock").css("font-size","13em");
+
+
+
+			<!-- Background -->
+			
+
+	  
+	  	$("html").css({background:'linear-gradient(#2d2d2d,#1b1b1b)'});
+		$("html").css({'min-height':'100%'});
+		$("html").css({'background-attachment':'fixed'});
+		
+		$("body").css({background:'linear-gradient(#2d2d2d,#1b1b1b)'});
+		
+		$("body").css({'margin': '0'});
+		$("body").css({'background-repeat': 'no-repeat'});
+		$("body").css({'height': '100%'});
+			
+			
+
+			dayDiv.innerText = dayString;
+			dateDiv.innerText = monthString + " " + numDay  + " " + year;
+			clockDiv.innerText = hours + ":" + minutes + ":" + seconds + meridiem;	
+			
+			}
+			displayTime();
+			
+			 
+			
+			setInterval(displayTime, 1000);
+			
+			
+			});
+			
+		
+/*		
+	var locResDiv = document.getElementById('location_response');
+
+	
+		function getLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showPosition);
+								
+			} else { 
+				locResDiv.innerHTML = "Geolocation is not supported by this browser.";
+			}
+		}
+		
+		var latLoc = "";
+		var longLoc ="";
+		function getPosition() {
+			var latloc = position.coords.latitude;
+			var longloc = position.coords.latitude;						
+		}
+		
+		var weatherArray = api.openweathermap.org/data/2.5/weather?lat={latloc}&lon={longloc};
+		var weatherArrayDiv = document.getElementById('weather_array');
+		
+		
+		function showPosition(position) {
+			locResDiv.innerHTML = "Latitude: " + position.coords.latitude + 
+			"<br>Longitude: " + position.coords.longitude;
+			}*/
+				
+		
+	</script>
+
+
+
+
+
+
+</body>
+</html>
